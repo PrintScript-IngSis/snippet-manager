@@ -7,7 +7,7 @@ on:
 
 
 env:
-  REGISTRY: gcr.io
+  REGISTRY: ghcr.io
   PROJECT_ID: ${{ github.repository }}
 
 jobs:
