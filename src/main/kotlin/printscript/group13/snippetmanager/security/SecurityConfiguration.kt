@@ -1,6 +1,5 @@
 package printscript.group13.snippetmanager.security
 
-
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -22,10 +21,11 @@ import org.springframework.security.web.SecurityFilterChain
 class SecurityConfiguration(
     @Value("\${auth0.audience}") val audience: String,
     @Value("\${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
-    val issuer: String,) {
+    val issuer: String,
+) {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        http.authorizeHttpRequests{
+        http.authorizeHttpRequests {
             it
                 .requestMatchers("/").permitAll()
                 .requestMatchers(GET, "/snippet").hasAuthority("SCOPE_read:snippets")
@@ -34,14 +34,15 @@ class SecurityConfiguration(
                 .anyRequest().authenticated()
         }
             .oauth2ResourceServer { it.jwt(withDefaults()) }
-            .cors{
+            .cors {
                 it.disable()
             }
-            .csrf{
+            .csrf {
                 it.disable()
             }
         return http.build()
     }
+
     @Bean
     fun jwtDecoder(): JwtDecoder {
         val jwtDecoder = NimbusJwtDecoder.withIssuerLocation(issuer).build()

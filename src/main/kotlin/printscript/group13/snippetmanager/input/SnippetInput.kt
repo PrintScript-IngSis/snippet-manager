@@ -8,5 +8,5 @@ data class SnippetInput(
     @NotNull
     val code: String,
     @NotNull
-    val language: String
+    val language: String,
 )

@@ -18,11 +18,10 @@ import java.util.UUID
 
 @RestController
 class SnippetController(private val snippetService: SnippetService) {
-
     @PostMapping()
     fun createSnippet(
-        @Valid @RequestBody snippetInput : SnippetInput,
-        @AuthenticationPrincipal jwt: Jwt
+        @Valid @RequestBody snippetInput: SnippetInput,
+        @AuthenticationPrincipal jwt: Jwt,
     ): ResponseEntity<SnippetDTO> {
         val userId = jwt.subject
         return ResponseEntity.ok(snippetService.createSnippet(snippetInput, userId))
@@ -31,7 +30,7 @@ class SnippetController(private val snippetService: SnippetService) {
     @PostMapping("/share/{id}")
     fun shareSnippet(
         @PathVariable("id") snippetId: UUID,
-        @AuthenticationPrincipal jwt: Jwt
+        @AuthenticationPrincipal jwt: Jwt,
     ): ResponseEntity<String> {
         val userId = jwt.subject
         return ResponseEntity.ok(snippetService.shareSnippet(snippetId, userId))
@@ -39,7 +38,7 @@ class SnippetController(private val snippetService: SnippetService) {
 
     @GetMapping()
     fun getAllSnippets(
-        @AuthenticationPrincipal jwt: Jwt
+        @AuthenticationPrincipal jwt: Jwt,
     ): ResponseEntity<List<SnippetDTO>> {
         val userId = jwt.subject
         return ResponseEntity.ok(snippetService.getAllSnippets(userId))
@@ -48,7 +47,7 @@ class SnippetController(private val snippetService: SnippetService) {
     @GetMapping("/{id}")
     fun getSnippetById(
         @PathVariable("id") snippetId: UUID,
-        @AuthenticationPrincipal jwt: Jwt
+        @AuthenticationPrincipal jwt: Jwt,
     ): ResponseEntity<SnippetDTO> {
         val userId = jwt.subject
         return ResponseEntity.ok(snippetService.getSnippetById(snippetId, userId))
@@ -57,7 +56,7 @@ class SnippetController(private val snippetService: SnippetService) {
     @DeleteMapping("/{id}")
     fun deleteSnippet(
         @PathVariable("id") snippetId: UUID,
-        @AuthenticationPrincipal jwt: Jwt
+        @AuthenticationPrincipal jwt: Jwt,
     ): ResponseEntity<Unit> {
         val userId = jwt.subject
         snippetService.deleteSnippet(snippetId, userId)
@@ -68,7 +67,7 @@ class SnippetController(private val snippetService: SnippetService) {
     fun updateSnippet(
         @PathVariable("id") snippetId: UUID,
         @Valid @RequestBody snippetInput: SnippetInput,
-        @AuthenticationPrincipal jwt: Jwt
+        @AuthenticationPrincipal jwt: Jwt,
     ): ResponseEntity<SnippetDTO> {
         val userId = jwt.subject
         return ResponseEntity.ok(snippetService.updateSnippet(snippetId, snippetInput, userId))
@@ -77,7 +76,7 @@ class SnippetController(private val snippetService: SnippetService) {
     @PostMapping("/run/{id}")
     fun runSnippet(
         @PathVariable("id") snippetId: UUID,
-        @AuthenticationPrincipal jwt: Jwt
+        @AuthenticationPrincipal jwt: Jwt,
     ): ResponseEntity<String> {
         val userId = jwt.subject
         return ResponseEntity.ok(snippetService.runSnippet(snippetId, userId))
