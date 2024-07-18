@@ -12,7 +12,9 @@ import printscript.group13.snippetmanager.dto.PermissionDTO
 import java.util.UUID
 
 @Service
-class PermissionService(@Value("localhost:8081") private val url: String) {
+class PermissionService(
+    @Value("localhost:8081") private val url: String,
+) {
     private lateinit var restTemp: RestTemplate
 
     fun createPermission(permissionDTO: PermissionDTO): ResponseEntity<Permission> {
@@ -27,8 +29,11 @@ class PermissionService(@Value("localhost:8081") private val url: String) {
         return ResponseEntity(createdPermission, response.statusCode)
     }
 
-    fun getUserPermissions(userId: String, snippetId: UUID): ResponseEntity<PermissionDTO> {
-        val completeUrl = "$url/${snippetId}/users/$userId"
+    fun getUserPermissions(
+        userId: String,
+        snippetId: UUID,
+    ): ResponseEntity<PermissionDTO> {
+        val completeUrl = "$url/$snippetId/users/$userId"
         val response = restTemp.getForEntity(completeUrl, PermissionDTO::class.java)
         val permissions = response.body
         return ResponseEntity(permissions, response.statusCode)

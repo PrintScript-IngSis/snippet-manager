@@ -1,6 +1,6 @@
 package printscript.group13.snippetmanager.dto
 
-import java.util.*
+import java.util.UUID
 
 interface Permission {
     val userId: UUID

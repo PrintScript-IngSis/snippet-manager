@@ -17,24 +17,27 @@ class SnippetService(
         snippetInput: SnippetInput,
         userId: String,
     ): SnippetDTO {
-        val newSnippet = Snippet(
-            id = UUID.randomUUID(),
-            name = snippetInput.name,
-            code = snippetInput.code,
-            language = snippetInput.language,
-            userId = userId
-        )
-        permissionService.createPermission(PermissionDTO(
-            userId = userId,
-            snippetId = newSnippet.id,
-            type = "owner")
+        val newSnippet =
+            Snippet(
+                id = UUID.randomUUID(),
+                name = snippetInput.name,
+                code = snippetInput.code,
+                language = snippetInput.language,
+                userId = userId,
+            )
+        permissionService.createPermission(
+            PermissionDTO(
+                userId = userId,
+                snippetId = newSnippet.id,
+                type = "owner",
+            ),
         )
         val snippet = snippetRepository.save(newSnippet)
         return SnippetDTO(
             id = snippet.id,
             name = snippet.name,
             code = snippet.code,
-            language = snippet.language
+            language = snippet.language,
         )
     }
 
@@ -43,11 +46,13 @@ class SnippetService(
         userId: String,
     ) {
         val permision = permissionService.getUserPermissions(userId, snippetId)
-        if (permision.body?.type  == "owner") {
-            permissionService.createPermission(PermissionDTO(
-                userId = userId,
-                snippetId = snippetId,
-                type = "read")
+        if (permision.body?.type == "owner") {
+            permissionService.createPermission(
+                PermissionDTO(
+                    userId = userId,
+                    snippetId = snippetId,
+                    type = "read",
+                ),
             )
         }
     }
@@ -60,13 +65,13 @@ class SnippetService(
         snippetId: UUID,
         userId: String,
     ): SnippetDTO {
-        if(permissionService.getUserPermissions(userId, snippetId).body?.type != "") {
+        if (permissionService.getUserPermissions(userId, snippetId).body?.type != "") {
             val snippet = snippetRepository.findById(snippetId).get()
             return SnippetDTO(
                 id = snippet.id,
                 name = snippet.name,
                 code = snippet.code,
-                language = snippet.language
+                language = snippet.language,
             )
         } else {
             throw Exception("User does not have permission to access this snippet")
@@ -100,7 +105,7 @@ class SnippetService(
                 id = snippet.id,
                 name = snippet.name,
                 code = snippet.code,
-                language = snippet.language
+                language = snippet.language,
             )
         } else {
             throw Exception("User does not have permission to update this snippet")
