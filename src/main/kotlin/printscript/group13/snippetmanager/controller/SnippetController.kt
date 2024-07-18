@@ -33,7 +33,8 @@ class SnippetController(private val snippetService: SnippetService) {
         @AuthenticationPrincipal jwt: Jwt,
     ): ResponseEntity<String> {
         val userId = jwt.subject
-        return ResponseEntity.ok(snippetService.shareSnippet(snippetId, userId))
+        snippetService.shareSnippet(snippetId, userId)
+        return ResponseEntity.ok("Snippet shared")
     }
 
     @GetMapping()

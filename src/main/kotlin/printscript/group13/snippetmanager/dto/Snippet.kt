@@ -17,5 +17,5 @@ data class Snippet(
     @Column(name = "language")
     val language: String,
     @Column(name = "user id")
-    val userId: UUID,
+    val userId: String,
 )
