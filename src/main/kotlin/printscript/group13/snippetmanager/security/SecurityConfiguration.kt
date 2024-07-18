@@ -1,4 +1,4 @@
-package printscript.group13.snippetmanager.auth
+package printscript.group13.snippetmanager.security
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -15,9 +15,6 @@ import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.security.oauth2.jwt.JwtValidators
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.CorsConfigurationSource
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 @EnableWebSecurity
@@ -34,13 +31,11 @@ class SecurityConfiguration(
                 .requestMatchers(GET, "/snippet").hasAuthority("SCOPE_read:snippets")
                 .requestMatchers(GET, "/snippet/*").hasAuthority("SCOPE_read:snippets")
                 .requestMatchers(POST, "/snippet").hasAuthority("SCOPE_write:snippets")
-                .requestMatchers("/docs/**").permitAll()
-                .requestMatchers("/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated()
         }
             .oauth2ResourceServer { it.jwt(withDefaults()) }
             .cors {
-                it.configurationSource(corsConfigurationSource())
+                it.disable()
             }
             .csrf {
                 it.disable()
@@ -56,20 +51,5 @@ class SecurityConfiguration(
         val withAudience: OAuth2TokenValidator<Jwt> = DelegatingOAuth2TokenValidator(withIssuer, audienceValidator)
         jwtDecoder.setJwtValidator(withAudience)
         return jwtDecoder
-    }
-
-    @Bean
-    fun corsConfigurationSource(): CorsConfigurationSource {
-        val config =
-            CorsConfiguration().apply {
-                allowCredentials = false
-                addAllowedOrigin("*") // Adjust this based on your security requirements
-                addAllowedOriginPattern("*")
-                addAllowedHeader("*")
-                addAllowedMethod("*")
-            }
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", config)
-        return source
     }
 }
