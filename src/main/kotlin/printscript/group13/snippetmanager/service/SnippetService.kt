@@ -42,8 +42,8 @@ class SnippetService(
         snippetId: UUID,
         userId: String,
     ) {
-        val permision = permissionService.getUserPermission(userId, snippetId)
-        if (permision.type == "owner") {
+        val permision = permissionService.getUserPermissions(userId, snippetId)
+        if (permision.body?.type  == "owner") {
             permissionService.createPermission(PermissionDTO(
                 userId = userId,
                 snippetId = snippetId,
@@ -52,15 +52,15 @@ class SnippetService(
         }
     }
 
-    fun getAllSnippets(userId: String): List<SnippetDTO>? {
-        val snippets = snippetRepository.findAllByUserId(userId)
-    }
+//    fun getAllSnippets(userId: String): List<SnippetDTO> {
+//        val snippets = snippetRepository.findById(userId)
+//    }
 
     fun getSnippetById(
         snippetId: UUID,
         userId: String,
     ): SnippetDTO {
-        if(permissionService.getUserPermission(userId, snippetId)) {
+        if(permissionService.getUserPermissions(userId, snippetId).body?.type != "") {
             val snippet = snippetRepository.findById(snippetId).get()
             return SnippetDTO(
                 id = snippet.id,
@@ -77,8 +77,8 @@ class SnippetService(
         snippetId: UUID,
         userId: String,
     ) {
-        if (permissionService.getUserPermission(userId, snippetId) == "owner") {
-            permissionService.deletePermission(userId, snippetId)
+        if (permissionService.getUserPermissions(userId, snippetId).body?.type == "owner") {
+//            permissionService.deletePermission(userId, snippetId)
             snippetRepository.deleteById(snippetId)
         } else {
             throw Exception("User does not have permission to delete this snippet")
@@ -90,7 +90,7 @@ class SnippetService(
         snippetInput: SnippetInput,
         userId: String,
     ): SnippetDTO? {
-        if (permissionService.getUserPermission(userId, snippetId) == "owner") {
+        if (permissionService.getUserPermissions(userId, snippetId).body?.type == "owner") {
             val snippet = snippetRepository.findById(snippetId).get()
             snippet.name = snippetInput.name
             snippet.code = snippetInput.code

@@ -37,13 +37,13 @@ class SnippetController(private val snippetService: SnippetService) {
         return ResponseEntity.ok("Snippet shared")
     }
 
-    @GetMapping()
-    fun getAllSnippets(
-        @AuthenticationPrincipal jwt: Jwt,
-    ): ResponseEntity<List<SnippetDTO>> {
-        val userId = jwt.subject
-        return ResponseEntity.ok(snippetService.getAllSnippets(userId))
-    }
+//    @GetMapping()
+//    fun getAllSnippets(
+//        @AuthenticationPrincipal jwt: Jwt,
+//    ): ResponseEntity<List<SnippetDTO>> {
+//        val userId = jwt.subject
+//        return ResponseEntity.ok(snippetService.getAllSnippets(userId))
+//    }
 
     @GetMapping("/{id}")
     fun getSnippetById(

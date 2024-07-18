@@ -11,11 +11,11 @@ data class Snippet(
     @Column(name = "id")
     val id: UUID,
     @Column(name = "name")
-    val name: String,
+    var name: String,
     @Column(name = "code")
-    val code: String,
+    var code: String,
     @Column(name = "language")
-    val language: String,
+    var language: String,
     @Column(name = "user id")
     val userId: String,
 )
