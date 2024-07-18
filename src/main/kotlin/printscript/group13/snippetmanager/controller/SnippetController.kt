@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import printscript.group13.snippetmanager.dto.SnippetDTO
 import printscript.group13.snippetmanager.input.SnippetInput
@@ -17,8 +18,9 @@ import printscript.group13.snippetmanager.service.SnippetService
 import java.util.UUID
 
 @RestController
+@RequestMapping("/snippets")
 class SnippetController(private val snippetService: SnippetService) {
-    @PostMapping()
+    @PostMapping("/create")
     fun createSnippet(
         @Valid @RequestBody snippetInput: SnippetInput,
         @AuthenticationPrincipal jwt: Jwt,
