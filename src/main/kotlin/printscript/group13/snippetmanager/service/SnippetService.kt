@@ -11,6 +11,16 @@ import printscript.group13.snippetmanager.dto.runner.output.FormatterOutput
 import printscript.group13.snippetmanager.dto.runner.output.InterpreterOutput
 import printscript.group13.snippetmanager.dto.runner.output.LinterOutput
 import printscript.group13.snippetmanager.exceptions.*
+import printscript.group13.snippetmanager.dto.Permission
+import printscript.group13.snippetmanager.dto.PermissionDTO
+import printscript.group13.snippetmanager.dto.ShareDTO
+import printscript.group13.snippetmanager.dto.Snippet
+import printscript.group13.snippetmanager.dto.SnippetDTO
+import printscript.group13.snippetmanager.exceptions.InvalidShareRequestException
+import printscript.group13.snippetmanager.exceptions.PermissionDeniedException
+import printscript.group13.snippetmanager.exceptions.PermissionNotFoundException
+import printscript.group13.snippetmanager.exceptions.SnippetNotFoundException
+import printscript.group13.snippetmanager.exceptions.SnippetValidationException
 import printscript.group13.snippetmanager.input.SnippetInput
 import printscript.group13.snippetmanager.repository.SnippetRepository
 import java.util.UUID
