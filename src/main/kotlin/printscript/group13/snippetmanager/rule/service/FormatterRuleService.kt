@@ -27,8 +27,7 @@ class FormatterRuleService(
     private val runnerService: RunnerService,
     @Value("\${formatter.blob.url}") private val formatterBlobUrl: String,
     private val permissionService: PermissionService,
-
-)  {
+) {
     @Autowired
     private val bucket = AzureBlobService(formatterBlobUrl)
 

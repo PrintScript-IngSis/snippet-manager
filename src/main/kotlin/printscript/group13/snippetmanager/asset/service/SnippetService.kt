@@ -22,8 +22,8 @@ import printscript.group13.snippetmanager.runner.output.InterpreterOutput
 import printscript.group13.snippetmanager.runner.output.LinterOutput
 import printscript.group13.snippetmanager.runner.service.RunnerService
 import printscript.group13.snippetmanager.util.parseLintingRulesToString
-import java.util.*
-
+import java.util.Date
+import java.util.UUID
 
 @Service
 class SnippetService(

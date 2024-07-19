@@ -6,6 +6,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - USERNAME=${USERNAME}
+        - TOKEN=${TOKEN}
     ports:
       - '8083:8083'
     environment:
@@ -14,6 +17,10 @@ services:
       DB_NAME: ${POSTGRES_DB}
       DB_HOST: ${DB_HOST}
       DB_PORT: 5432
+      BLOB_URL: ${BLOB_URL}
+      REDIS_HOST: ${REDIS_HOST}
+      PERMISSION_URL: ${PERMISSION_URL}
+      RUNNER_URL: ${RUNNER}
 #      NEW_RELIC_AGENT_ENABLED: false
     networks:
       - snippet_network
@@ -58,6 +65,12 @@ services:
       - azurite_data:/data
     networks:
       - manager_network
+
+  redis:
+    container_name: "redis"
+    image: redis:6-alpine
+    ports:
+      - "6379:6379"
 
 volumes:
   pgdata:

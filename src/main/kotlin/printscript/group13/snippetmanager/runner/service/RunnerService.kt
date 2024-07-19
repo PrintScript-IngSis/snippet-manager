@@ -11,19 +11,19 @@ import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import printscript.group13.snippetmanager.runner.input.FormatterInputDTO
 import printscript.group13.snippetmanager.runner.input.InterpreterInputDTO
-import printscript.group13.snippetmanager.runner.output.InterpreterOutput
 import printscript.group13.snippetmanager.runner.input.LinterInputDTO
 import printscript.group13.snippetmanager.runner.output.FormatterOutput
+import printscript.group13.snippetmanager.runner.output.InterpreterOutput
 import printscript.group13.snippetmanager.runner.output.LinterOutput
 
 @Service
 class RunnerService(
     @Value("\${runner.url}/api/run") private val url: String,
 ) {
-
     @Autowired
     private lateinit var restTemp: RestTemplate
     private val logger = LoggerFactory.getLogger(RunnerService::class.java)
+
     fun runCode(input: InterpreterInputDTO): ResponseEntity<InterpreterOutput> {
         val completeUrl = "$url/interpret"
         logger.info("Running interpreter")

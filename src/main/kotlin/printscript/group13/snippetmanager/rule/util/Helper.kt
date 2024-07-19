@@ -4,7 +4,6 @@ import printscript.group13.snippetmanager.rule.dto.FormatterRuleInput
 import printscript.group13.snippetmanager.rule.dto.FormatterRules
 import printscript.group13.snippetmanager.rule.dto.LinterRuleInput
 
-
 fun createDefaultFormatterRules(): FormatterRules {
     return FormatterRules(
         listOf(

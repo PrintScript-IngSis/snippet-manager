@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import printscript.group13.snippetmanager.blob.AzureBlobService
-import printscript.group13.snippetmanager.runner.output.LinterOutput
 import printscript.group13.snippetmanager.exceptions.RuleNotFoundException
 import printscript.group13.snippetmanager.permission.service.PermissionService
 import printscript.group13.snippetmanager.redis.input.ProducerRequest
@@ -16,6 +15,7 @@ import printscript.group13.snippetmanager.rule.model.LinterRule
 import printscript.group13.snippetmanager.rule.repository.LinterRuleRepository
 import printscript.group13.snippetmanager.rule.util.createDefaultLinterRules
 import printscript.group13.snippetmanager.runner.input.LinterInputDTO
+import printscript.group13.snippetmanager.runner.output.LinterOutput
 import printscript.group13.snippetmanager.runner.service.RunnerService
 import printscript.group13.snippetmanager.util.parseLintingRulesToString
 import printscript.group13.snippetmanager.util.parseToLinterRules

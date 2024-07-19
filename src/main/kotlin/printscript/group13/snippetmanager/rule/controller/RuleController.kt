@@ -18,7 +18,6 @@ import printscript.group13.snippetmanager.rule.service.LinterRuleService
 import printscript.group13.snippetmanager.runner.output.FormatterOutput
 import printscript.group13.snippetmanager.runner.output.LinterOutput
 
-
 @RestController
 @RequestMapping("/rule")
 @CrossOrigin("*")

@@ -1,6 +1,5 @@
 package printscript.group13.snippetmanager.util
 
-
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import printscript.group13.snippetmanager.rule.dto.FormatterRuleInput

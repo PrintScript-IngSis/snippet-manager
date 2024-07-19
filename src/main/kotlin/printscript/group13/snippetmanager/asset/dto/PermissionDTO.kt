@@ -1,6 +1,6 @@
 package printscript.group13.snippetmanager.asset.dto
 
-import java.util.*
+import java.util.UUID
 
 data class PermissionDTO(
     val userId: String?,

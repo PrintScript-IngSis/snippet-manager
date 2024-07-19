@@ -1,6 +1,8 @@
 FROM gradle:8.5-jdk21 as build
 COPY . /home/gradle/src
 WORKDIR /home/gradle/src
+ARG USERNAME=${USERNAME}
+ARG TOKEN=${TOKEN}
 RUN gradle assemble
 
 FROM openjdk:21-jdk-slim

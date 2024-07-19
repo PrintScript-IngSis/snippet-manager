@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import printscript.group13.snippetmanager.asset.dto.PermissionDTO
 import printscript.group13.snippetmanager.permission.dto.SnippetPermissionDTO
-import java.util.*
+import java.util.UUID
 
 @Service
 class PermissionService(
@@ -19,6 +19,7 @@ class PermissionService(
     private val restTemplate: RestTemplate,
 ) {
     private val logger = LoggerFactory.getLogger(PermissionService::class.java)
+
     fun create(
         userId: String,
         assetId: UUID,

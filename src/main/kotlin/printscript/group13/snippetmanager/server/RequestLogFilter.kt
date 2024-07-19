@@ -9,10 +9,12 @@ import reactor.core.publisher.Mono
 
 @Component
 class RequestLogFilter : WebFilter {
-
     val logger = LoggerFactory.getLogger(RequestLogFilter::class.java)
 
-    override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Void> {
+    override fun filter(
+        exchange: ServerWebExchange,
+        chain: WebFilterChain,
+    ): Mono<Void> {
         val uri = exchange.request.uri
         val method = exchange.request.method.toString()
         val prefix = "$method $uri"

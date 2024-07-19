@@ -36,5 +36,5 @@ class LinterException(message: String) : RuntimeException(message)
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 class FormatterException(message: String) : RuntimeException(message)
 
-
-
+@ResponseStatus(HttpStatus.NOT_FOUND)
+class RuleNotFoundException(message: String) : RuntimeException(message)

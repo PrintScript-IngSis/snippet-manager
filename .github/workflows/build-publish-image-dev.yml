@@ -9,7 +9,8 @@ on:
 env:
   REGISTRY: ghcr.io
   PROJECT_ID: ${{ github.repository }}
-
+  USERNAME: ${{ secrets.PUBLISH_USER }}
+  TOKEN: ${{ secrets.PUBLISH_TOKEN }}
 jobs:
   build:
     runs-on: ubuntu-latest

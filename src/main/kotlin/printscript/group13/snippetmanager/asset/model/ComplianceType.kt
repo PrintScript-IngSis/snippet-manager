@@ -10,5 +10,4 @@ enum class ComplianceType(val value: String) {
     fun toValue(): String {
         return this.value
     }
-
 }
