@@ -14,6 +14,7 @@ services:
       DB_NAME: ${POSTGRES_DB}
       DB_HOST: ${DB_HOST}
       DB_PORT: 5432
+#      NEW_RELIC_AGENT_ENABLED: false
     networks:
       - snippet_network
       - manager_network
