@@ -1,5 +1,6 @@
 package printscript.group13.snippetmanager.service
 
+import PermissionTypeDTO
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
@@ -18,11 +19,11 @@ class PermissionService(
 ) {
 
     fun createPermission(permissionDTO: PermissionDTO): ResponseEntity<Permission> {
-        val completeUrl = "$url/permissions/${permissionDTO.snippetId}/users/${permissionDTO.userId}"
+        val completeUrl = "$url/api/permissions/${permissionDTO.snippetId}/users/${permissionDTO.userId}"
         val headers = HttpHeaders()
         headers.contentType = MediaType.APPLICATION_JSON
-
-        val requestEntity = HttpEntity(permissionDTO, headers)
+        val permissionDTOType = PermissionTypeDTO(permissionDTO.permission)
+        val requestEntity = HttpEntity(permissionDTOType, headers)
 
         val response = restTemp.postForEntity(completeUrl, requestEntity, Permission::class.java)
         val createdPermission = response.body

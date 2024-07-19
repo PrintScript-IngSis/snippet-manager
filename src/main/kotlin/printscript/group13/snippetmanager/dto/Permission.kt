@@ -2,9 +2,9 @@ package printscript.group13.snippetmanager.dto
 
 import java.util.UUID
 
-interface Permission {
-    val userId: UUID
-    val snippetId: UUID
-    val permission: String
-    val username: String
-}
+data class Permission (
+    val userId: String,
+    val snippetId: UUID,
+    val permission: String,
+    val id: UUID
+)

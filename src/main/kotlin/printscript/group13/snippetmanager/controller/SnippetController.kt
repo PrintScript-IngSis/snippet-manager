@@ -18,7 +18,7 @@ import printscript.group13.snippetmanager.service.SnippetService
 import java.util.UUID
 
 @RestController
-@RequestMapping("/snippets")
+@RequestMapping("/api/snippets")
 class SnippetController(private val snippetService: SnippetService) {
     @PostMapping("/create")
     fun createSnippet(
