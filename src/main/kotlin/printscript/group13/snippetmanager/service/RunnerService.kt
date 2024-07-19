@@ -1,5 +1,6 @@
 package printscript.group13.snippetmanager.service
 
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
@@ -19,8 +20,10 @@ class RunnerService(
     @Value("http://localhost:8082/api/run") private val url: String,
     private val restTemp: RestTemplate,
 ) {
+    private val logger = LoggerFactory.getLogger(RunnerService::class.java)
     fun runCode(input: InterpreterInputDTO): ResponseEntity<InterpreterOutput> {
         val completeUrl = "$url/interpret"
+        logger.info("Running interpreter")
         val headers = HttpHeaders()
         headers.contentType = MediaType.APPLICATION_JSON
 
@@ -31,6 +34,7 @@ class RunnerService(
 
     fun lintCode(input: LinterInputDTO): ResponseEntity<LinterOutput> {
         val completeUrl = "$url/lint"
+        logger.info("Running linter")
         val headers = HttpHeaders()
         headers.contentType = MediaType.APPLICATION_JSON
 
@@ -41,6 +45,7 @@ class RunnerService(
 
     fun formatCode(input: FormatterInputDTO): ResponseEntity<FormatterOutput> {
         val completeUrl = "$url/format"
+        logger.info("Running format")
         val headers = HttpHeaders()
         headers.contentType = MediaType.APPLICATION_JSON
 

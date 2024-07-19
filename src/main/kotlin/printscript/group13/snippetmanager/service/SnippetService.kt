@@ -1,5 +1,6 @@
 package printscript.group13.snippetmanager.service
 
+import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.HttpClientErrorException
@@ -31,6 +32,7 @@ class SnippetService(
     private val permissionService: PermissionService,
     private val runnerService: RunnerService,
 ) {
+    private val logger = LoggerFactory.getLogger(SnippetService::class.java)
     fun createSnippet(
         snippetInput: SnippetInput,
         userId: String,
@@ -38,6 +40,7 @@ class SnippetService(
         if (snippetInput.name.isBlank() || snippetInput.code.isBlank()) {
             throw SnippetValidationException("Snippet name or code cannot be empty")
         }
+        logger.info("Creating snippet")
 
         val newSnippet =
             Snippet(
@@ -74,6 +77,7 @@ class SnippetService(
             throw PermissionNotFoundException()
         }
         if (permission.body?.permission == "owner") {
+            logger.info("Sharing snippet")
             return permissionService.createPermission(
                 PermissionDTO(
                     userId = shareDTO.userId,
@@ -98,6 +102,7 @@ class SnippetService(
 
         if (permission.body?.permission != "" && permission.hasBody()) {
             val snippet = snippetRepository.findById(snippetId).orElseThrow { SnippetNotFoundException() }
+            logger.info("Getting snippet by id: $snippetId")
             return SnippetDTO(
                 id = snippet.id,
                 name = snippet.name,
@@ -117,12 +122,16 @@ class SnippetService(
         try {
             permission = permissionService.getUserPermissions(userId, snippetId)
         } catch (e: HttpClientErrorException.NotFound) {
+            logger.info("Permission not found to delete snippet id: $snippetId")
             throw PermissionNotFoundException()
         }
         if (permission.body?.permission == "owner") {
             snippetRepository.deleteById(snippetId)
             permissionService.deletePermission(snippetId)
-        } else {
+            logger.info("Deleted snippet id: $snippetId")
+        }
+        else {
+            logger.info("Permission denied to delete snippet id: $snippetId")
             throw PermissionDeniedException()
         }
     }
