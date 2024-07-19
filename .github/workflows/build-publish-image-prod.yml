@@ -60,3 +60,6 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+          build-args: |
+            USERNAME=${{ secrets.PUBLISH_USER }}
+            TOKEN=${{ secrets.PUBLISH_TOKEN }}
