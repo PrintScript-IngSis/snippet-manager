@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import printscript.group13.snippetmanager.dto.Permission
+import printscript.group13.snippetmanager.dto.ShareDTO
 import printscript.group13.snippetmanager.dto.SnippetDTO
 import printscript.group13.snippetmanager.input.SnippetInput
 import printscript.group13.snippetmanager.service.SnippetService
@@ -29,14 +31,14 @@ class SnippetController(private val snippetService: SnippetService) {
         return ResponseEntity.ok(snippetService.createSnippet(snippetInput, userId))
     }
 
-    @PostMapping("/share/{id}")
+    @PostMapping("/share")
     fun shareSnippet(
-        @PathVariable("id") snippetId: UUID,
+        @Valid @RequestBody shareDTO: ShareDTO,
         @AuthenticationPrincipal jwt: Jwt,
-    ): ResponseEntity<String> {
+    ): ResponseEntity<Permission> {
         val userId = jwt.subject
-        snippetService.shareSnippet(snippetId, userId)
-        return ResponseEntity.ok("Snippet shared")
+        return ResponseEntity.ok(snippetService.shareSnippet(shareDTO, userId).body)
+
     }
 
 //    @GetMapping()

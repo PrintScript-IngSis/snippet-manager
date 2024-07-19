@@ -1,9 +1,8 @@
 package printscript.group13.snippetmanager.service
 
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
-import printscript.group13.snippetmanager.dto.PermissionDTO
-import printscript.group13.snippetmanager.dto.Snippet
-import printscript.group13.snippetmanager.dto.SnippetDTO
+import printscript.group13.snippetmanager.dto.*
 import printscript.group13.snippetmanager.input.SnippetInput
 import printscript.group13.snippetmanager.repository.SnippetRepository
 import java.util.UUID
@@ -42,19 +41,20 @@ class SnippetService(
     }
 
     fun shareSnippet(
-        snippetId: UUID,
+        shareDTO: ShareDTO,
         userId: String,
-    ) {
-        val permision = permissionService.getUserPermissions(userId, snippetId)
+    ): ResponseEntity<Permission> {
+        val permision = permissionService.getUserPermissions(userId, shareDTO.snippetId)
         if (permision.body?.permission == "owner") {
-            permissionService.createPermission(
+            return permissionService.createPermission(
                 PermissionDTO(
-                    userId = userId,
-                    snippetId = snippetId,
+                    userId = shareDTO.userId,
+                    snippetId = shareDTO.snippetId,
                     permission = "read",
                 ),
             )
         }
+        return ResponseEntity.badRequest().build()
     }
 
 //    fun getAllSnippets(userId: String): List<SnippetDTO> {
