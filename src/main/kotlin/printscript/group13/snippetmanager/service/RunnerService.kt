@@ -1,0 +1,51 @@
+package printscript.group13.snippetmanager.service
+
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
+import org.springframework.stereotype.Service
+import org.springframework.web.client.RestTemplate
+import printscript.group13.snippetmanager.dto.runner.input.FormatterInputDTO
+import printscript.group13.snippetmanager.dto.runner.input.InterpreterInputDTO
+import printscript.group13.snippetmanager.dto.runner.output.InterpreterOutput
+import printscript.group13.snippetmanager.dto.runner.input.LinterInputDTO
+import printscript.group13.snippetmanager.dto.runner.output.FormatterOutput
+import printscript.group13.snippetmanager.dto.runner.output.LinterOutput
+
+@Service
+class RunnerService(
+    @Value("http://localhost:8082/api/run") private val url: String,
+    private val restTemp: RestTemplate,
+) {
+    fun runCode(input: InterpreterInputDTO): ResponseEntity<InterpreterOutput> {
+        val completeUrl = "$url/interpret"
+        val headers = HttpHeaders()
+        headers.contentType = MediaType.APPLICATION_JSON
+
+        val requestEntity = HttpEntity(input, headers)
+        val response = restTemp.postForEntity(completeUrl, requestEntity, InterpreterOutput::class.java)
+        return ResponseEntity(response.body, response.statusCode)
+    }
+
+    fun lintCode(input: LinterInputDTO): ResponseEntity<LinterOutput> {
+        val completeUrl = "$url/lint"
+        val headers = HttpHeaders()
+        headers.contentType = MediaType.APPLICATION_JSON
+
+        val requestEntity = HttpEntity(input, headers)
+        val response = restTemp.postForEntity(completeUrl, requestEntity, LinterOutput::class.java)
+        return ResponseEntity(response.body, response.statusCode)
+    }
+
+    fun formatCode(input: FormatterInputDTO): ResponseEntity<FormatterOutput> {
+        val completeUrl = "$url/format"
+        val headers = HttpHeaders()
+        headers.contentType = MediaType.APPLICATION_JSON
+
+        val requestEntity = HttpEntity(input, headers)
+        val response = restTemp.postForEntity(completeUrl, requestEntity, FormatterOutput::class.java)
+        return ResponseEntity(response.body, response.statusCode)
+    }
+}

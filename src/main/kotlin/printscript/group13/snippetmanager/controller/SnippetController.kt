@@ -5,9 +5,12 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.web.bind.annotation.*
+import printscript.group13.snippetmanager.dto.runner.output.InterpreterOutput
 import printscript.group13.snippetmanager.dto.Permission
 import printscript.group13.snippetmanager.dto.ShareDTO
 import printscript.group13.snippetmanager.dto.SnippetDTO
+import printscript.group13.snippetmanager.dto.runner.output.FormatterOutput
+import printscript.group13.snippetmanager.dto.runner.output.LinterOutput
 import printscript.group13.snippetmanager.input.SnippetInput
 import printscript.group13.snippetmanager.service.SnippetService
 import java.util.UUID
@@ -66,8 +69,26 @@ class SnippetController(private val snippetService: SnippetService) {
     fun runSnippet(
         @PathVariable("id") snippetId: UUID,
         @AuthenticationPrincipal jwt: Jwt,
-    ): ResponseEntity<String> {
+    ): ResponseEntity<InterpreterOutput> {
         val userId = jwt.subject
         return ResponseEntity.ok(snippetService.runSnippet(snippetId, userId))
+    }
+
+    @PostMapping("/lint/{id}")
+    fun lintSnippet(
+        @PathVariable("id") snippetId: UUID,
+        @AuthenticationPrincipal jwt: Jwt,
+    ): ResponseEntity<LinterOutput> {
+        val userId = jwt.subject
+        return ResponseEntity.ok(snippetService.lintSnippet(snippetId, userId))
+    }
+
+    @PostMapping("/format/{id}")
+    fun formatSnippet(
+        @PathVariable("id") snippetId: UUID,
+        @AuthenticationPrincipal jwt: Jwt,
+    ): ResponseEntity<FormatterOutput> {
+        val userId = jwt.subject
+        return ResponseEntity.ok(snippetService.formatSnippet(snippetId, userId))
     }
 }
