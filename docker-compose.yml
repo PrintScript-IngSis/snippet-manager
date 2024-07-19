@@ -14,6 +14,9 @@ services:
       DB_NAME: ${POSTGRES_DB}
       DB_HOST: ${DB_HOST}
       DB_PORT: 5432
+    networks:
+      - snippet_network
+      - manager_network
 
   db:
     container_name: 'manager-db'
@@ -24,6 +27,8 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+    networks:
+      - manager_network
 
     volumes:
       - pgdata:/var/lib/postgresql/data
@@ -36,6 +41,8 @@ services:
     environment:
       AZURE_HOST: "http://azurite"
       NEW_RELIC_AGENT_ENABLED: false
+    networks:
+      - manager_network
 
   azurite:
     container_name: "azurite"
@@ -48,8 +55,18 @@ services:
       - "10002:10002"
     volumes:
       - azurite_data:/data
+    networks:
+      - manager_network
 
 volumes:
   pgdata:
   azurite_data:
     external: false
+
+networks:
+  manager_network:
+    name: manager_network
+    driver: bridge
+  snippet_network:
+    name: snippet_network
+    driver: bridge
