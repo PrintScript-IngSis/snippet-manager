@@ -29,7 +29,7 @@ class SnippetService(
             PermissionDTO(
                 userId = userId,
                 snippetId = newSnippet.id,
-                type = "owner",
+                permission = "owner",
             ),
         )
         val snippet = snippetRepository.save(newSnippet)
@@ -46,12 +46,12 @@ class SnippetService(
         userId: String,
     ) {
         val permision = permissionService.getUserPermissions(userId, snippetId)
-        if (permision.body?.type == "owner") {
+        if (permision.body?.permission == "owner") {
             permissionService.createPermission(
                 PermissionDTO(
                     userId = userId,
                     snippetId = snippetId,
-                    type = "read",
+                    permission = "read",
                 ),
             )
         }
@@ -65,7 +65,7 @@ class SnippetService(
         snippetId: UUID,
         userId: String,
     ): SnippetDTO {
-        if (permissionService.getUserPermissions(userId, snippetId).body?.type != "") {
+        if (permissionService.getUserPermissions(userId, snippetId).body?.permission != "") {
             val snippet = snippetRepository.findById(snippetId).get()
             return SnippetDTO(
                 id = snippet.id,
@@ -82,7 +82,7 @@ class SnippetService(
         snippetId: UUID,
         userId: String,
     ) {
-        if (permissionService.getUserPermissions(userId, snippetId).body?.type == "owner") {
+        if (permissionService.getUserPermissions(userId, snippetId).body?.permission == "owner") {
 //            permissionService.deletePermission(userId, snippetId)
             snippetRepository.deleteById(snippetId)
         } else {
@@ -95,7 +95,7 @@ class SnippetService(
         snippetInput: SnippetInput,
         userId: String,
     ): SnippetDTO? {
-        if (permissionService.getUserPermissions(userId, snippetId).body?.type == "owner") {
+        if (permissionService.getUserPermissions(userId, snippetId).body?.permission == "owner") {
             val snippet = snippetRepository.findById(snippetId).get()
             snippet.name = snippetInput.name
             snippet.code = snippetInput.code

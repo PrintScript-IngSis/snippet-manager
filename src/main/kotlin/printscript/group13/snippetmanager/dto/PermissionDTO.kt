@@ -5,5 +5,6 @@ import java.util.UUID
 data class PermissionDTO(
     val userId: String,
     val snippetId: UUID,
-    val type: String,
+    val permission: String
 )
+

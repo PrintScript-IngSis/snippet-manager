@@ -13,12 +13,12 @@ import java.util.UUID
 
 @Service
 class PermissionService(
-    @Value("localhost:8081") private val url: String,
+    @Value("http://localhost:8081") private val url: String,
+    private val restTemp: RestTemplate,
 ) {
-    private lateinit var restTemp: RestTemplate
 
     fun createPermission(permissionDTO: PermissionDTO): ResponseEntity<Permission> {
-        val completeUrl = "$url/${permissionDTO.snippetId}/users/${permissionDTO.userId}"
+        val completeUrl = "$url/permissions/${permissionDTO.snippetId}/users/${permissionDTO.userId}"
         val headers = HttpHeaders()
         headers.contentType = MediaType.APPLICATION_JSON
 
