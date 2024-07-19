@@ -2,6 +2,7 @@ package printscript.group13.snippetmanager.service
 
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
+import org.springframework.web.client.HttpClientErrorException
 import printscript.group13.snippetmanager.dto.*
 import printscript.group13.snippetmanager.exceptions.*
 import printscript.group13.snippetmanager.input.SnippetInput
@@ -21,13 +22,14 @@ class SnippetService(
             throw SnippetValidationException("Snippet name or code cannot be empty")
         }
 
-        val newSnippet = Snippet(
-            id = UUID.randomUUID(),
-            name = snippetInput.name,
-            code = snippetInput.code,
-            language = snippetInput.language,
-            userId = userId,
-        )
+        val newSnippet =
+            Snippet(
+                id = UUID.randomUUID(),
+                name = snippetInput.name,
+                code = snippetInput.code,
+                language = snippetInput.language,
+                userId = userId,
+            )
         permissionService.createPermission(
             PermissionDTO(
                 userId = userId,
@@ -48,7 +50,12 @@ class SnippetService(
         shareDTO: ShareDTO,
         userId: String,
     ): ResponseEntity<Permission> {
-        val permission = permissionService.getUserPermissions(userId, shareDTO.snippetId)
+        val permission: ResponseEntity<PermissionDTO>
+        try {
+            permission = permissionService.getUserPermissions(userId, shareDTO.snippetId)
+        } catch (e: HttpClientErrorException.NotFound) {
+            throw PermissionDeniedException()
+        }
         if (permission.body?.permission == "owner") {
             if (permissionService.getUserPermissions(shareDTO.userId, shareDTO.snippetId).body?.permission != null) {
                 throw PermissionAlreadyExistsException()
