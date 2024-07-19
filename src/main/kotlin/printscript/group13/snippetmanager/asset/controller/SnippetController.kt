@@ -24,7 +24,7 @@ import printscript.group13.snippetmanager.runner.output.InterpreterOutput
 import java.util.UUID
 
 @RestController
-@RequestMapping("/snippet")
+@RequestMapping("api/snippet")
 @Tag(name = "Snippet")
 @CrossOrigin("*")
 class SnippetController(
