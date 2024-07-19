@@ -21,7 +21,7 @@ import printscript.group13.snippetmanager.asset.dto.SnippetUpdateDTO
 import printscript.group13.snippetmanager.asset.service.SnippetService
 import printscript.group13.snippetmanager.runner.input.InterpreterInputDTO
 import printscript.group13.snippetmanager.runner.output.InterpreterOutput
-import java.util.*
+import java.util.UUID
 
 @RestController
 @RequestMapping("/snippet")
@@ -76,7 +76,6 @@ class SnippetController(
         snippetService.shareAsset(userId, shareDTO)
         return ResponseEntity.noContent().build()
     }
-
 
     @PutMapping("/{id}")
     fun updateSnippet(
