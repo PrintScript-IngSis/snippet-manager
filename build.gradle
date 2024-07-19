@@ -36,6 +36,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation ("org.jetbrains.kotlinx:kover-gradle-plugin:0.7.6")
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    runtimeOnly 'com.h2database:h2'
 }
 
 tasks.withType(KotlinCompile) {
