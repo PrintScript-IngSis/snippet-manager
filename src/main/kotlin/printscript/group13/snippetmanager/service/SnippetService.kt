@@ -54,12 +54,9 @@ class SnippetService(
         try {
             permission = permissionService.getUserPermissions(userId, shareDTO.snippetId)
         } catch (e: HttpClientErrorException.NotFound) {
-            throw PermissionDeniedException()
+            throw PermissionNotFoundException()
         }
         if (permission.body?.permission == "owner") {
-            if (permissionService.getUserPermissions(shareDTO.userId, shareDTO.snippetId).body?.permission != null) {
-                throw PermissionAlreadyExistsException()
-            }
             return permissionService.createPermission(
                 PermissionDTO(
                     userId = shareDTO.userId,
@@ -75,7 +72,13 @@ class SnippetService(
         snippetId: UUID,
         userId: String,
     ): SnippetDTO {
-        val permission = permissionService.getUserPermissions(userId, snippetId)
+        val permission: ResponseEntity<PermissionDTO>
+        try {
+            permission = permissionService.getUserPermissions(userId, snippetId)
+        } catch (e: HttpClientErrorException.NotFound) {
+            throw PermissionNotFoundException()
+        }
+
         if (permission.body?.permission != "" && permission.hasBody()) {
             val snippet = snippetRepository.findById(snippetId).orElseThrow { SnippetNotFoundException() }
             return SnippetDTO(
@@ -93,9 +96,15 @@ class SnippetService(
         snippetId: UUID,
         userId: String,
     ) {
-        val permission = permissionService.getUserPermissions(userId, snippetId)
+        val permission: ResponseEntity<PermissionDTO>
+        try {
+            permission = permissionService.getUserPermissions(userId, snippetId)
+        } catch (e: HttpClientErrorException.NotFound) {
+            throw PermissionNotFoundException()
+        }
         if (permission.body?.permission == "owner") {
             snippetRepository.deleteById(snippetId)
+            permissionService.deletePermission(snippetId)
         } else {
             throw PermissionDeniedException()
         }
@@ -106,7 +115,12 @@ class SnippetService(
         snippetInput: SnippetInput,
         userId: String,
     ): SnippetDTO {
-        val permission = permissionService.getUserPermissions(userId, snippetId)
+        val permission: ResponseEntity<PermissionDTO>
+        try {
+            permission = permissionService.getUserPermissions(userId, snippetId)
+        } catch (e: HttpClientErrorException.NotFound) {
+            throw PermissionNotFoundException()
+        }
         if (permission.body?.permission == "owner") {
             val snippet = snippetRepository.findById(snippetId).orElseThrow { SnippetNotFoundException() }
             snippet.name = snippetInput.name

@@ -9,6 +9,9 @@ class SnippetNotFoundException : RuntimeException("Snippet not found")
 @ResponseStatus(HttpStatus.FORBIDDEN)
 class PermissionDeniedException : RuntimeException("User does not have permission to access this snippet")
 
+@ResponseStatus(HttpStatus.NOT_FOUND)
+class PermissionNotFoundException : RuntimeException("Permission not found")
+
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 class InvalidShareRequestException : RuntimeException("Invalid share request")
 
