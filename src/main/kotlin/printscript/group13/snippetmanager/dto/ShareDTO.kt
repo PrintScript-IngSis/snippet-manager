@@ -4,5 +4,5 @@ import java.util.UUID
 
 data class ShareDTO(
     val snippetId: UUID,
-    val userId: String
+    val userId: String,
 )

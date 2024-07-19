@@ -11,7 +11,7 @@ import java.util.UUID
 
 @Service
 class PermissionService(
-    @Value("http://localhost:8081/api/permissions") private val url: String,
+    @Value("http://snippet-permission-app:8081/api/permissions") private val url: String,
     private val restTemp: RestTemplate,
 ) {
     fun createPermission(permissionDTO: PermissionDTO): ResponseEntity<Permission> {
@@ -43,7 +43,7 @@ class PermissionService(
         val permissionDTOType = PermissionTypeDTO(permissionDTO.permission)
         val requestEntity = HttpEntity(permissionDTOType, headers)
 
-        val response = restTemp.exchange(completeUrl, HttpMethod.PATCH , requestEntity, Permission::class.java)
+        val response = restTemp.exchange(completeUrl, HttpMethod.PATCH, requestEntity, Permission::class.java)
         return ResponseEntity(response.body, response.statusCode)
     }
 
