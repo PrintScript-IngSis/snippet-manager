@@ -26,4 +26,3 @@ class PermissionAlreadyExistsException : RuntimeException("Permission already ex
 
 @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 class InternalServerErrorException : RuntimeException("An unexpected error occurred")
-

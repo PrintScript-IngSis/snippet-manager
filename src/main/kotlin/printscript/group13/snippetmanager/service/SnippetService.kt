@@ -3,8 +3,16 @@ package printscript.group13.snippetmanager.service
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.HttpClientErrorException
-import printscript.group13.snippetmanager.dto.*
-import printscript.group13.snippetmanager.exceptions.*
+import printscript.group13.snippetmanager.dto.Permission
+import printscript.group13.snippetmanager.dto.PermissionDTO
+import printscript.group13.snippetmanager.dto.ShareDTO
+import printscript.group13.snippetmanager.dto.Snippet
+import printscript.group13.snippetmanager.dto.SnippetDTO
+import printscript.group13.snippetmanager.exceptions.InvalidShareRequestException
+import printscript.group13.snippetmanager.exceptions.PermissionDeniedException
+import printscript.group13.snippetmanager.exceptions.PermissionNotFoundException
+import printscript.group13.snippetmanager.exceptions.SnippetNotFoundException
+import printscript.group13.snippetmanager.exceptions.SnippetValidationException
 import printscript.group13.snippetmanager.input.SnippetInput
 import printscript.group13.snippetmanager.repository.SnippetRepository
 import java.util.UUID
@@ -143,6 +151,14 @@ class SnippetService(
         userId: String,
     ): String? {
         // Implement snippet running logic here
+        return null
+    }
+
+    fun formatSnippet(
+        snippetId: UUID,
+        userId: String,
+    ): String? {
+        // Implement snippet formatting logic here
         return null
     }
 }
