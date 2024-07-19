@@ -4,14 +4,7 @@ import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.jwt.Jwt
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import printscript.group13.snippetmanager.dto.Permission
 import printscript.group13.snippetmanager.dto.ShareDTO
 import printscript.group13.snippetmanager.dto.SnippetDTO
@@ -38,16 +31,7 @@ class SnippetController(private val snippetService: SnippetService) {
     ): ResponseEntity<Permission> {
         val userId = jwt.subject
         return ResponseEntity.ok(snippetService.shareSnippet(shareDTO, userId).body)
-
     }
-
-//    @GetMapping()
-//    fun getAllSnippets(
-//        @AuthenticationPrincipal jwt: Jwt,
-//    ): ResponseEntity<List<SnippetDTO>> {
-//        val userId = jwt.subject
-//        return ResponseEntity.ok(snippetService.getAllSnippets(userId))
-//    }
 
     @GetMapping("/{id}")
     fun getSnippetById(
