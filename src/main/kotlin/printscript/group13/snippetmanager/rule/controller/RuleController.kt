@@ -19,7 +19,7 @@ import printscript.group13.snippetmanager.runner.output.FormatterOutput
 import printscript.group13.snippetmanager.runner.output.LinterOutput
 
 @RestController
-@RequestMapping("/rule")
+@RequestMapping("/api/rule")
 @CrossOrigin("*")
 class RuleController(
     private val formatterRuleService: FormatterRuleService,

@@ -31,9 +31,9 @@ class SecurityConfiguration(
         http.authorizeHttpRequests {
             it
                 .requestMatchers("/").permitAll()
-                .requestMatchers(GET, "/snippet").hasAuthority("SCOPE_read:snippets")
-                .requestMatchers(GET, "/snippet/*").hasAuthority("SCOPE_read:snippets")
-                .requestMatchers(POST, "/snippet").hasAuthority("SCOPE_write:snippets")
+                .requestMatchers(GET, "/api/snippet").hasAuthority("SCOPE_read:snippets")
+                .requestMatchers(GET, "/api/snippet/*").hasAuthority("SCOPE_read:snippets")
+                .requestMatchers(POST, "/api/snippet").hasAuthority("SCOPE_write:snippets")
                 .anyRequest().authenticated()
         }
             .oauth2ResourceServer { it.jwt(withDefaults()) }
