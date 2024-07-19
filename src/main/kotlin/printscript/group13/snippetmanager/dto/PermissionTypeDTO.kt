@@ -1,3 +1,3 @@
 data class PermissionTypeDTO(
-    val permission: String
+    val permission: String,
 )

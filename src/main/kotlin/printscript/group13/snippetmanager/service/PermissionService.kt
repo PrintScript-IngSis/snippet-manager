@@ -17,7 +17,6 @@ class PermissionService(
     @Value("http://localhost:8081") private val url: String,
     private val restTemp: RestTemplate,
 ) {
-
     fun createPermission(permissionDTO: PermissionDTO): ResponseEntity<Permission> {
         val completeUrl = "$url/api/permissions/${permissionDTO.snippetId}/users/${permissionDTO.userId}"
         val headers = HttpHeaders()
