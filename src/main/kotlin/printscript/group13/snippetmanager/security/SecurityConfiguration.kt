@@ -30,10 +30,6 @@ class SecurityConfiguration(
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.authorizeHttpRequests {
             it
-                .requestMatchers("/").permitAll()
-                .requestMatchers(GET, "/api/snippet").hasAuthority("SCOPE_read:snippets")
-                .requestMatchers(GET, "/api/snippet/*").hasAuthority("SCOPE_read:snippets")
-                .requestMatchers(POST, "/api/snippet").hasAuthority("SCOPE_write:snippets")
                 .anyRequest().authenticated()
         }
             .oauth2ResourceServer { it.jwt(withDefaults()) }
