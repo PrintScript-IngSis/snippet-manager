@@ -28,7 +28,7 @@ class SecurityConfiguration(
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.authorizeHttpRequests {
             it
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
         }
             .oauth2ResourceServer { it.jwt(withDefaults()) }
             .cors { it.configurationSource(corsConfigurationSource()) }
