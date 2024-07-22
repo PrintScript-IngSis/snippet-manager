@@ -92,10 +92,9 @@ class SnippetController(
     fun runSnippet(
         @PathVariable("snippetId") snippetId: UUID,
         @AuthenticationPrincipal jwt: Jwt,
-        @Valid @RequestBody executeInput: InterpreterInputDTO,
     ): ResponseEntity<InterpreterOutput> {
         val userId = jwt.subject
-        val result = snippetService.executeSnippet(snippetId, userId, executeInput)
+        val result = snippetService.executeSnippet(snippetId, userId)
         return ResponseEntity.ok(result)
     }
 }

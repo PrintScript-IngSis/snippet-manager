@@ -32,6 +32,7 @@ class SnippetService(
     private val permissionService: PermissionService,
     private val runnerService: RunnerService,
     private val linterRuleService: LinterRuleService,
+    private val azureBlobService: AzureBlobService,
 ) {
     private val logger = LoggerFactory.getLogger(SnippetService::class.java)
 
@@ -171,7 +172,6 @@ class SnippetService(
     fun executeSnippet(
         snippetId: UUID,
         userId: String,
-        interpreterInput: InterpreterInputDTO,
     ): InterpreterOutput {
         logger.info("Finding snippet by id")
         val snippet = snippetRepository.findById(snippetId)
@@ -181,6 +181,8 @@ class SnippetService(
                 logger.error("User has not permissions to run snippet")
                 throw PermissionNotFoundException()
             }
+            val asset = azureBlobService.get(snippetId)
+            val interpreterInput = InterpreterInputDTO(asset.body!!, snippet.get().language!!, "", emptyMap())
             logger.info("Running snippet")
             val result = runnerService.runCode(interpreterInput)
             return result.body!!
